@@ -2,11 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <UserSecretsId>aspnet-Util.Samples.Webs-D0551EBC-0589-40AD-ADC2-A88CA4609632</UserSecretsId>
     <Authors>何镇汐</Authors>
     <Company>何镇汐</Company>
-    <PackageReleaseNotes></PackageReleaseNotes>
-    <PackageProjectUrl></PackageProjectUrl>
     <Description>Util应用框架Web示例项目</Description>
     <!--阻止ts自动编译-->
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
@@ -23,13 +20,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Typings\app\env.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Exceptionless.AspNetCore" Version="4.2.1989" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0-preview1-final" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="2.3.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="2.4.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,10 +42,6 @@
     <ProjectReference Include="..\..\src\Util.Ui.Angular\03-Util.Ui.Angular.csproj" />
     <ProjectReference Include="..\..\src\Util.Webs\07-Util.Webs.csproj" />
     <ProjectReference Include="..\..\src\Util\01-Util.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Include="Typings\app\env.ts" />
   </ItemGroup>
 
   <ItemGroup>

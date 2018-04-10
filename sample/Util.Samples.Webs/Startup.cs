@@ -11,7 +11,6 @@ using Util.Events.Default;
 using Util.Logs.Extensions;
 using Util.Samples.Webs.Datas;
 using Util.Samples.Webs.Datas.SqlServer;
-using Util.Ui.Extensions;
 using Util.Webs.Extensions;
 
 namespace Util.Samples.Webs {
@@ -48,18 +47,18 @@ namespace Util.Samples.Webs {
             //添加事件总线服务
             services.AddEventBus();
 
-            //添加angular服务
-            services.AddAngular();
+            //注册XSRF令牌服务
+            services.AddXsrfToken();
 
             //添加工作单元
             services.AddUnitOfWork<ISampleUnitOfWork, SampleUnitOfWork>( Configuration.GetConnectionString( "DefaultConnection" ) );
 
             //添加Swagger
-            services.AddSwaggerGen( c => {
-                c.SwaggerDoc( "v1", new Info { Title = "Util Web Api Demo", Version = "v1" } );
-                c.IncludeXmlComments( Path.Combine( AppContext.BaseDirectory, "Util.xml" ) );
-                c.IncludeXmlComments( Path.Combine( AppContext.BaseDirectory, "Util.Webs.xml" ) );
-                c.IncludeXmlComments( Path.Combine( AppContext.BaseDirectory, "Util.Samples.Webs.xml" ) );
+            services.AddSwaggerGen( options => {
+                options.SwaggerDoc( "v1", new Info { Title = "Util Web Api Demo", Version = "v1" } );
+                options.IncludeXmlComments( Path.Combine( AppContext.BaseDirectory, "Util.xml" ) );
+                options.IncludeXmlComments( Path.Combine( AppContext.BaseDirectory, "Util.Webs.xml" ) );
+                options.IncludeXmlComments( Path.Combine( AppContext.BaseDirectory, "Util.Samples.Webs.xml" ) );
             } );
 
             //添加Util基础设施服务
@@ -87,18 +86,8 @@ namespace Util.Samples.Webs {
             app.UseWebpackDevMiddleware( new WebpackDevMiddlewareOptions {
                 HotModuleReplacement = true
             } );
-            ConfigSwagger( app );
+            app.UseSwaggerX();
             CommonConfig( app );
-        }
-
-        /// <summary>
-        /// 配置Swagger
-        /// </summary>
-        private void ConfigSwagger( IApplicationBuilder app ) {
-            app.UseSwagger();
-            app.UseSwaggerUI( c => {
-                c.SwaggerEndpoint( "/swagger/v1/swagger.json", "api v1" );
-            } );
         }
 
         /// <summary>
@@ -108,7 +97,7 @@ namespace Util.Samples.Webs {
             app.UseErrorLog();
             app.UseStaticFiles();
             app.UseAuthentication();
-            app.UseAngular();
+            app.UseXsrfToken();
             ConfigRoute( app );
         }
 

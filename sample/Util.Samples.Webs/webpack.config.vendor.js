@@ -11,9 +11,9 @@ const polyfillModules = [
 
 //第三方Js库
 const jsModules = [
-    'moment',
     'reflect-metadata',
     'zone.js',
+    'moment',
     '@angular/animations',
     '@angular/common',
     '@angular/common/http',
@@ -24,7 +24,6 @@ const jsModules = [
     '@angular/platform-browser/animations',
     '@angular/platform-browser-dynamic',
     '@angular/router',
-    'hammerjs',
     '@angular/cdk/esm5/collections.es5',
     '@angular/flex-layout',
     '@angular/material',
@@ -35,8 +34,7 @@ const jsModules = [
 const cssModules = [
     '@angular/material/prebuilt-themes/indigo-pink.css',
     'material-design-icons/iconfont/material-icons.css',
-    'font-awesome/css/font-awesome.css',
-    'primeng/resources/primeng.css'
+    'font-awesome/css/font-awesome.css'
 ];
 
 //env代表环境变量，如果传入env.production表示正式生产环境
@@ -94,7 +92,7 @@ module.exports = (env) => {
             new webpack.ContextReplacementPlugin(/\@angular\b.*\b(bundles|linker)/, getPath('./Typings')),
             new webpack.ContextReplacementPlugin(/angular(\\|\/)core(\\|\/)@angular/, getPath('./Typings')),
             new webpack.IgnorePlugin(/^vertx$/)
-        ].concat(isDev ? [] : [new webpack.optimize.UglifyJsPlugin()])
+        ]
     }
 
     //打包css
@@ -125,5 +123,5 @@ module.exports = (env) => {
             extractCss
         ]
     }
-    return [polyfills, vendorJs, vendorCss];
+    return isDev ? [polyfills, vendorJs, vendorCss] : [vendorCss];
 }
